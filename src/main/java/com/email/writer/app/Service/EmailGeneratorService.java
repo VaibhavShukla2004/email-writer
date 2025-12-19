@@ -1,50 +1,33 @@
 package com.email.writer.app.Service;
 
-import org.jspecify.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.email.writer.app.DTO.EmailRequest;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @Service
 public class EmailGeneratorService {
 
-    @Value("${gemini.api.url}")
-    private String geminiApiUrl;
+    private final Client client = Client.builder()
+            .apiKey(System.getenv("GEMINI_KEY"))
+            .build();
 
-    @Value("${gemini.api.key}")
-    private String geminiApiKey;
+    public Mono<String> generateEmailReply(EmailRequest emailRequest) {
 
-    public Mono<@Nullable String> generateEmailReply(EmailRequest emailRequest) {
-
-        // Build the prompt
+        // build the prompt
         String prompt = buildPrompt(emailRequest);
 
-        // verify environment variables
-        System.out.println("URL = " + geminiApiUrl);
-        System.out.println("KEY = " + geminiApiKey);
+        // call Gemini on a bounded elastic thread
+        return Mono.fromCallable(() -> {
+            // generate response
+            GenerateContentResponse response = client.models.generateContent("gemini-2.5-flash", prompt, null);
 
-        // build Gemini client
-        Client client = Client.builder()
-                .apiKey(System.getenv("GEMINI_KEY"))
-                .build();
-
-        //get Response from Gemini
-        GenerateContentResponse response = client.models.generateContent(
-                "gemini-2.5-flash",
-                prompt,
-                null);                                       
-
-        // return reply from Gemini
-        return Mono.just(response.text());
-    }
-
-    public Mono<String> extractText(GenerateContentResponse response) {
-        String content = response.text();
-        return Mono.just(content);
+            // extract text
+            return response.text();
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     private String buildPrompt(EmailRequest emailRequest) {
