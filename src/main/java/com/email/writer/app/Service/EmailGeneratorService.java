@@ -2,10 +2,7 @@ package com.email.writer.app.Service;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
 import com.email.writer.app.DTO.EmailRequest;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
@@ -14,12 +11,6 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class EmailGeneratorService {
-
-    private final WebClient webClient;
-
-    public EmailGeneratorService(WebClient webClient) {
-        this.webClient = webClient;
-    }
 
     @Value("${gemini.api.url}")
     private String geminiApiUrl;
