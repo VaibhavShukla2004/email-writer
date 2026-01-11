@@ -1,5 +1,6 @@
 package com.email.writer.app.Controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
+@CrossOrigin(origins = "localhost:5173")
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
