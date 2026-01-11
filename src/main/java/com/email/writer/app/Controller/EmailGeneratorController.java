@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
-@CrossOrigin(origins = "localhost:5173")
+@CrossOrigin(origins = "${FRONTEND_URL}")
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
