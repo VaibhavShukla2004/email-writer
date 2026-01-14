@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
-@CrossOrigin(origins = "{FRONTEND_URL}")
+@CrossOrigin(origins = "https://email-writer-react-2wir-git-main-vaibhavshukla2004s-projects.vercel.app")
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
