@@ -1,0 +1,13 @@
+[1mdiff --git a/src/main/java/com/email/writer/app/Service/EmailGeneratorService.java b/src/main/java/com/email/writer/app/Service/EmailGeneratorService.java[m
+[1mindex 6dc1f34..9be7ab8 100644[m
+[1m--- a/src/main/java/com/email/writer/app/Service/EmailGeneratorService.java[m
+[1m+++ b/src/main/java/com/email/writer/app/Service/EmailGeneratorService.java[m
+[36m@@ -12,7 +12,7 @@[m [mimport reactor.core.scheduler.Schedulers;[m
+ public class EmailGeneratorService {[m
+ [m
+     private final Client client = Client.builder()[m
+[31m-            .apiKey("AIzaSyCmPNUHGlS0fVZy4M2o3d0Civb-yJtqCaY")[m
+[32m+[m[32m            .apiKey(System.getenv("GEMINI_KEY"))[m
+             .build();[m
+ [m
+     public Mono<String> generateEmailReply(EmailRequest emailRequest) {[m
