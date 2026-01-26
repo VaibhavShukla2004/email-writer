@@ -12,7 +12,7 @@ import reactor.core.scheduler.Schedulers;
 public class EmailGeneratorService {
 
     private final Client client = Client.builder()
-            .apiKey(System.getenv("AIzaSyCmPNUHGlS0fVZy4M2o3d0Civb-yJtqCaY"))
+            .apiKey("AIzaSyCmPNUHGlS0fVZy4M2o3d0Civb-yJtqCaY")
             .build();
 
     public Mono<String> generateEmailReply(EmailRequest emailRequest) {
